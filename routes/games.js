@@ -7,7 +7,7 @@ const riddlesPool = require('../riddles');
 // Fetch leaderboard
 router.get('/leaderboard', async (req, res) => {
     try {
-        const leaderboard = await Leaderboard.find().sort({ score: -1 }).limit(10);
+        const leaderboard = await Leaderboard.find().sort({ score: -1 });
         res.json(leaderboard);
     } catch (err) {
         res.status(400).json('Error: ' + err);
@@ -36,6 +36,18 @@ router.post('/new', async (req, res) => {
         res.status(400).json('Error: ' + err);
     }
 });
+
+
+
+router.get('/players', async (req, res) => {
+    try {
+        const players = await Game.find().select('playerName');
+        res.json(players);
+    } catch (err) {
+        res.status(400).json('Error: ' + err);
+    }
+});
+
 
 // Get a game by ID
 router.get('/:id', async (req, res) => {
